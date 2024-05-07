@@ -12,6 +12,7 @@ public class FirstPersonController : MonoBehaviour
     public float WalkSpeed = 10;
     public float JumpPower = 7;
     public List<GameObject> Floors;
+    public bool InZone = false;
 
     // Start is called before the first frame update
     void Start()
@@ -58,11 +59,20 @@ float xRot = Input.GetAxis("Mouse X") * MouseSensitivity;
     {
         if (!Floors.Contains(other.gameObject))
             Floors.Add(other.gameObject);
-    }
+	if (other.gameObject.CompareTag("Hitzone"))
+	{
+		InZone = true;
+	}
+}
+
 
     private void OnCollisionExit(Collision other)
     {
         Floors.Remove(other.gameObject);
+	if (other.gameObject.CompareTag("Hitzone"))
+	{
+		InZone = false;
+	}
     }
 
 }
